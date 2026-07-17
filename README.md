@@ -1,9 +1,22 @@
-# NoiseGuard · 楼上噪音 AI 反击
+# NoiseGuard for macOS · 楼上低频噪音检测与反击提示
 
-常驻 macOS 的小工具:用麦克风持续监听楼上传来的**低频"咚咚/跺脚"噪音**,当短时间内
-连续检测到多次低频冲击时,自动往指定音响播放一段"反击"提示音。
+当楼上的跺脚、拖拽和低频“咚咚”声一次次穿过天花板，打断睡眠、工作与难得的安静，
+那种无法躲开、又很难向别人证明的持续折磨，只有真正经历过的人才明白。NoiseGuard
+希望用可观察、可调节的技术手段，给长期承受楼上低频噪音的人一点掌控感。
 
-> ⚠️ 仅供学习交流与自娱自乐。请遵守当地法律法规,理性维权、以和为贵,勿用于骚扰他人。
+这是一个常驻 **macOS** 的楼上噪音检测工具：用麦克风持续监听**低频“咚咚 / 跺脚 / 撞击”**，
+短时间内确认多次低频冲击后，通过指定音响播放用户选择的提示音。
+
+> [!CAUTION]
+> **本仓库仅供娱乐爱好、技术学习与日常研究。严禁用于任何非法目的，严禁用于骚扰、恐吓、
+> 报复或伤害他人，也不得连接可能危及人身与财产安全的设备。** 请遵守当地法律法规、物业规定
+> 与安静时段要求；遇到真实噪音纠纷，应优先沟通、留存证据并通过物业或合法渠道解决。
+
+## 搜索关键词 / Keywords
+
+楼上噪音、低频噪音、跺脚声、咚咚声、噪音检测、声音检测、macOS 噪音工具、
+upstairs noise、low-frequency noise、footstep noise、impact sound detection、
+audio DSP、FFT detector、PySide6、Python、sounddevice。
 
 ## 功能
 
@@ -19,8 +32,8 @@
 需要 Python 3.9+(macOS 自带的 `/usr/bin/python3` 即可)。
 
 ```bash
-git clone https://github.com/zq500480/noise-guard.git
-cd noise-guard
+git clone https://github.com/zq500480/noiseguard-upstairs-noise-macos.git
+cd noiseguard-upstairs-noise-macos
 python3 -m venv .venv
 ./.venv/bin/pip install -r requirements.txt
 ./.venv/bin/python noise_guard.py
@@ -63,4 +76,4 @@ codesign --force --deep --sign - "dist/NoiseGuard.app"   # ad-hoc 签名
 
 ## License
 
-MIT
+MIT。使用、修改或分发本项目时，使用者须自行确保用途合法合规；作者不对滥用行为承担责任。
