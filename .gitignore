@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+咚咚.wav
+noiseguard_debug.log
+.DS_Store
+build/
+dist/
+*.spec
