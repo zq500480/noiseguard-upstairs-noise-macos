@@ -6,6 +6,7 @@ audio_core — 与界面无关的 DSP 核心。
 """
 
 import os
+import sys
 import time
 import threading
 from collections import deque
@@ -15,7 +16,17 @@ import sounddevice as sd
 import soundfile as sf
 
 APP_DIR = os.path.dirname(os.path.abspath(__file__))
-DEFAULT_SOUND = os.path.join(APP_DIR, "咚咚.wav")
+
+
+def _default_sound_path():
+    """源码运行写项目目录；打包 App 写用户目录，避免 /Applications 权限问题。"""
+    if getattr(sys, "frozen", False):
+        data_dir = os.path.expanduser("~/Library/Application Support/NoiseGuard")
+        return os.path.join(data_dir, "咚咚.wav")
+    return os.path.join(APP_DIR, "咚咚.wav")
+
+
+DEFAULT_SOUND = _default_sound_path()
 
 # ---- DSP 参数 ----
 BLOCK = 4096                    # 每帧样本数 (48kHz ≈ 85ms,足够分辨低频)
@@ -47,6 +58,7 @@ def synth_thump(sr=48000):
 
 def ensure_default_sound():
     if not os.path.exists(DEFAULT_SOUND):
+        os.makedirs(os.path.dirname(DEFAULT_SOUND), exist_ok=True)
         sig, sr = synth_thump()
         sf.write(DEFAULT_SOUND, sig, sr)
     return DEFAULT_SOUND

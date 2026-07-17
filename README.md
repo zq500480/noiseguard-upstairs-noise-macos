@@ -27,6 +27,18 @@ audio DSP、FFT detector、PySide6、Python、sounddevice。
 - 📈 实时波形示波器 + 输入电平 + 低频能量/占比/尖锐度/综合评分
 - 🎚️ 灵敏度、确认次数、冷却时间可调
 
+## 下载 macOS M 芯片安装包
+
+前往 [GitHub Releases](https://github.com/zq500480/noiseguard-upstairs-noise-macos/releases/latest)
+下载文件名包含 **`macOS-Apple-Silicon-arm64.dmg`** 的安装包。
+
+> **此安装包仅适用于 macOS 14 及以上的 Apple Silicon（M1 / M2 / M3 / M4 及后续 M 系列芯片），
+> 不支持 Intel Mac。**
+
+打开 DMG 后，将 `NoiseGuard.app` 拖入 `Applications`。当前公开安装包采用 ad-hoc 签名，
+未使用付费 Apple Developer 证书公证；若 macOS 首次阻止启动，请在 Finder 中右键 App →
+“打开”→“仍要打开”，并在系统设置中允许麦克风权限。
+
 ## 安装 & 运行
 
 需要 Python 3.9+(macOS 自带的 `/usr/bin/python3` 即可)。
@@ -56,17 +68,15 @@ python3 -m venv .venv
 2. 点「▶ 开始监听」,对着麦克风制造**低频闷响**(拳头捶桌 / 跺脚)测试——注意**拍手不算**(太尖锐,会被过滤)。
 3. 调参建议:先把**灵敏度**调到 1~2、**确认次数**调到 1 方便测试,验证通过后再调回(灵敏度 6、确认 3)防误触发。
 
-## 打包成独立 .app（可选，让麦克风权限更省心）
+## 自行构建 M 芯片安装包
 
 ```bash
-./.venv/bin/pip install pyinstaller
-./.venv/bin/pyinstaller --windowed --name "NoiseGuard" \
-    --osx-bundle-identifier com.example.noiseguard \
-    noise_guard.py
-codesign --force --deep --sign - "dist/NoiseGuard.app"   # ad-hoc 签名
+chmod +x build_macos_arm64.sh
+./build_macos_arm64.sh
 ```
-> 打包时需要给生成的 `Info.plist` 加 `NSMicrophoneUsageDescription`(可用 `.spec` 的
-> `info_plist` 字段注入),否则申请麦克风时可能被系统直接终止。
+
+构建脚本只允许在原生 `arm64` Mac 上运行，并会自动写入麦克风权限说明、执行 ad-hoc 签名，
+最终输出 `dist/NoiseGuard-v版本-macOS-Apple-Silicon-arm64.dmg`。
 
 ## 工作原理
 
